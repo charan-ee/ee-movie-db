@@ -16,6 +16,9 @@ class MovieViewModel : ViewModel() {
     val errorMessage = MutableLiveData<String>()
     val movieList: LiveData<List<Movie>> = _movieList
 
+    private val _currentMovieList = MutableLiveData(listOf(Movie(0, "", "", "", "")))
+    val currentMovieList: LiveData<List<Movie>> = _currentMovieList
+
     fun getAllMovies(movieRepository: MovieRepository) {
         val response = movieRepository.getAllMovies()
         response.enqueue(object : Callback<APIResponse> {
@@ -28,6 +31,19 @@ class MovieViewModel : ViewModel() {
                 errorMessage.postValue(t.message)
             }
         })
+    }
 
+    fun getCurrentPlayingMovies(movieRepository: MovieRepository) {
+        val response = movieRepository.getCurrentPlayingMovies()
+        response.enqueue(object : Callback<APIResponse> {
+            override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>) {
+                _currentMovieList.postValue(response.body()?.movies)
+                Log.i("res", response.body()?.movies.toString())
+            }
+
+            override fun onFailure(call: Call<APIResponse>, t: Throwable) {
+                errorMessage.postValue(t.message)
+            }
+        })
     }
 }
