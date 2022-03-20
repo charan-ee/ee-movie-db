@@ -34,7 +34,7 @@ class PopularMovieFragment : Fragment(R.layout.popular_movie_layout) {
         popularMovieRV.layoutManager = LinearLayoutManager(activity).apply {
             orientation = LinearLayoutManager.VERTICAL
         }
-        popularMovieRV.adapter=MovieListAdapter(listOf(Movie(0,"","","","")))
+        popularMovieRV.adapter=MovieListAdapter(listOf(Movie(0,"","","","", "")))
 
         viewModel.getAllMovies(movieRepository)
         viewModel.movieList.observe(viewLifecycleOwner){

@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.everest.moviedb.databinding.CurrentMovieLayoutBinding
+import com.everest.moviedb.databinding.MovielistItemBinding
 import com.everest.moviedb.model.Movie
 import com.everest.moviedb.model.MovieRepository
 import java.lang.RuntimeException
@@ -16,6 +18,7 @@ import java.lang.RuntimeException
 class CurrentMovieFragment : Fragment(R.layout.current_movie_layout) {
 
     lateinit var binding: CurrentMovieLayoutBinding
+    lateinit var movieItemBinding: MovielistItemBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,11 +38,12 @@ class CurrentMovieFragment : Fragment(R.layout.current_movie_layout) {
         currentMovieRV.layoutManager = LinearLayoutManager(activity).apply {
             orientation = LinearLayoutManager.VERTICAL
         }
-        currentMovieRV.adapter = MovieListAdapter(listOf(Movie(0, "", "", "", "")))
+        currentMovieRV.adapter = MovieListAdapter(listOf(Movie(0, "", "", "", "", "")))
 
         viewModel.getCurrentPlayingMovies(movieRepository)
         viewModel.currentMovieList.observe(viewLifecycleOwner) {
             currentMovieRV.adapter = MovieListAdapter(it)
         }
+
     }
 }

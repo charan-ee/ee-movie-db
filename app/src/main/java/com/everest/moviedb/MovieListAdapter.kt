@@ -1,6 +1,8 @@
 package com.everest.moviedb
 
+import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -22,6 +24,17 @@ class MovieListAdapter(val movies: List<Movie>) : RecyclerView.Adapter<MovieList
         holder.nameTV.text = movie.name
         holder.duration.text = movie.category
         Glide.with(holder.itemView.context).load(imageURL).into(holder.movieImage)
+
+        holder.movieItemCL.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(view: View) {
+                val intent = Intent(view.context, MovieDetailsActivity::class.java)
+                intent.putExtra("overview", movie.desc)
+                intent.putExtra("name", movie.name)
+
+                intent.putExtra("imageUrl", imageURL)
+                view.context.startActivity(intent)
+            }
+        })
     }
 
     override fun getItemCount(): Int = movies.size

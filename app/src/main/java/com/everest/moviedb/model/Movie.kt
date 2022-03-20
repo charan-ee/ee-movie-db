@@ -9,12 +9,16 @@ data class Movie(
     @SerializedName("original_title")
     val name: String,
 
-    @SerializedName("backdrop_path")
+    @SerializedName("poster_path")
     val imageUrl: String,
+
+    @SerializedName("background_path")
+    val backgroundUrl: String,
 
     @SerializedName("original_language")
     val category: String,
 
     @SerializedName("overview")
     val desc: String
+
 )
