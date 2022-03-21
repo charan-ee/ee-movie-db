@@ -38,19 +38,6 @@ class PopularMovieFragment : Fragment(R.layout.popular_movie_layout) {
         viewModel.movieList.observe(viewLifecycleOwner){
             popularMovieRV.adapter=MovieListAdapter(it)
         }
-//        val movieListAdapter = MovieListAdapter()
-//        viewModel = ViewModelProvider(
-//            this,
-//            MovieRepository(RetrofitClient.getClient()))
-//        ).get(MovieViewModel::class.java)
-//
-//        viewModel.movieList.observe(viewLifecycleOwner, Observer {
-//            Log.d(TAG, "onCreate: $it")
-//            movieListAdapter.setMoviesList(it)
-//        })
-//        viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
-//        })
-//        viewModel.getAllMovies()
 
     }
 

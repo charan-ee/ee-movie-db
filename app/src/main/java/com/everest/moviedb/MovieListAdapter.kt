@@ -32,7 +32,6 @@ class MovieListAdapter(val movies: List<Movie>) : RecyclerView.Adapter<MovieList
                 val intent = Intent(view.context, MovieDetailsActivity::class.java)
                 intent.putExtra("overview", movie.desc)
                 intent.putExtra("name", movie.name)
-
                 intent.putExtra("imageUrl", imageURL)
                 view.context.startActivity(intent)
             }

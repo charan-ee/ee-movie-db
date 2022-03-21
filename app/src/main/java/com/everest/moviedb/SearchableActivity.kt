@@ -47,7 +47,6 @@ class SearchableActivity : AppCompatActivity() {
 
                 viewModel.getMoviesByName(movieRepository, newText)
                 viewModel.searchMovieList.observe(this@SearchableActivity) {
-                    Log.i("mov", it.toString())
                     searchMovieRV.adapter = MovieListAdapter(it)
                 }
                 return true
