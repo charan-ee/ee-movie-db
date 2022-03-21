@@ -1,7 +1,6 @@
 package com.everest.moviedb.model
 
 import com.google.gson.annotations.SerializedName
-import java.util.*
 
 data class Movie(
     @SerializedName("id")
