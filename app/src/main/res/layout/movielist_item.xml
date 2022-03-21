@@ -13,7 +13,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/movie_image"
         android:layout_width="wrap_content"
-        android:layout_height="144dp"
+        android:layout_height="148dp"
         android:scaleType="fitEnd"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,15 +32,26 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/movie_duration_tv"
+        android:id="@+id/movieReleaseDateTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:text="@string/duration_TV"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/movie_name_tv" />
+
+    <TextView
+        android:id="@+id/movieVotingTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/rating_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movieReleaseDateTV" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

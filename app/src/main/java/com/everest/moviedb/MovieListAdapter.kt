@@ -22,7 +22,9 @@ class MovieListAdapter(val movies: List<Movie>) : RecyclerView.Adapter<MovieList
         val movie = movies[position]
         val imageURL = "https://image.tmdb.org/t/p/w200" + movie.imageUrl
         holder.nameTV.text = movie.name
-        holder.duration.text = movie.category
+        holder.releaseDateTV.text = movie.release_date.toString()
+        holder.ratingTV.text = movie.rating
+
         Glide.with(holder.itemView.context).load(imageURL).into(holder.movieImage)
 
         holder.movieItemCL.setOnClickListener(object: View.OnClickListener {

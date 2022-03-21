@@ -1,14 +1,12 @@
 package com.everest.moviedb
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.everest.moviedb.databinding.PopularMovieLayoutBinding
 import com.everest.moviedb.model.Movie
 import com.everest.moviedb.model.MovieRepository
@@ -34,7 +32,7 @@ class PopularMovieFragment : Fragment(R.layout.popular_movie_layout) {
         popularMovieRV.layoutManager = LinearLayoutManager(activity).apply {
             orientation = LinearLayoutManager.VERTICAL
         }
-        popularMovieRV.adapter=MovieListAdapter(listOf(Movie(0,"","","","", "")))
+        popularMovieRV.adapter=MovieListAdapter(listOf(Movie(0,"","","","", "", "", "")))
 
         viewModel.getAllMovies(movieRepository)
         viewModel.movieList.observe(viewLifecycleOwner){

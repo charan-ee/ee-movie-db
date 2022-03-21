@@ -1,12 +1,10 @@
 package com.everest.moviedb
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.everest.moviedb.databinding.CurrentMovieLayoutBinding
@@ -38,7 +36,7 @@ class CurrentMovieFragment : Fragment(R.layout.current_movie_layout) {
         currentMovieRV.layoutManager = LinearLayoutManager(activity).apply {
             orientation = LinearLayoutManager.VERTICAL
         }
-        currentMovieRV.adapter = MovieListAdapter(listOf(Movie(0, "", "", "", "", "")))
+        currentMovieRV.adapter = MovieListAdapter(listOf(Movie(0, "", "", "", "", "", "", "")))
 
         viewModel.getCurrentPlayingMovies(movieRepository)
         viewModel.currentMovieList.observe(viewLifecycleOwner) {

@@ -1,6 +1,5 @@
 package com.everest.moviedb
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,14 +11,14 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MovieViewModel : ViewModel() {
-    private val _movieList = MutableLiveData(listOf(Movie(0, "", "", "", "", "")))
+    private val _movieList = MutableLiveData(listOf(Movie(0, "", "", "", "", "", "", "")))
     val errorMessage = MutableLiveData<String>()
     val movieList: LiveData<List<Movie>> = _movieList
 
-    private val _currentMovieList = MutableLiveData(listOf(Movie(0, "", "", "", "", "")))
+    private val _currentMovieList = MutableLiveData(listOf(Movie(0, "", "", "", "", "", "", "")))
     val currentMovieList: LiveData<List<Movie>> = _currentMovieList
 
-    private val _searchMovieList = MutableLiveData(listOf(Movie(0, "", "", "", "", "")))
+    private val _searchMovieList = MutableLiveData(listOf(Movie(0, "", "", "", "", "", "", "")))
     val searchMovieList: LiveData<List<Movie>> = _searchMovieList
 
 

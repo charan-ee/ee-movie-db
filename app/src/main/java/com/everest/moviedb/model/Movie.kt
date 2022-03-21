@@ -1,6 +1,7 @@
 package com.everest.moviedb.model
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 data class Movie(
     @SerializedName("id")
@@ -16,9 +17,16 @@ data class Movie(
     val backgroundUrl: String,
 
     @SerializedName("original_language")
-    val category: String,
+    val language: String,
 
     @SerializedName("overview")
-    val desc: String
+    val desc: String,
+
+    @SerializedName("release_date")
+    val release_date: String,
+
+    @SerializedName("vote_average")
+    val rating: String
+
 
 )

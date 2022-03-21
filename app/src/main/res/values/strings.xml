@@ -6,4 +6,5 @@
     <string name="duration_TV">Duration</string>
     <string name="search_hint">Search</string>
     <string name="search_title">Search Movie</string>
+    <string name="rating_tv">10</string>
 </resources>
