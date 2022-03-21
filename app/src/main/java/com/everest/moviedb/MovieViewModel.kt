@@ -19,12 +19,16 @@ class MovieViewModel : ViewModel() {
     private val _currentMovieList = MutableLiveData(listOf(Movie(0, "", "", "", "", "")))
     val currentMovieList: LiveData<List<Movie>> = _currentMovieList
 
+    private val _searchMovieList = MutableLiveData(listOf(Movie(0, "", "", "", "", "")))
+    val searchMovieList: LiveData<List<Movie>> = _searchMovieList
+
+
+
     fun getAllMovies(movieRepository: MovieRepository) {
         val response = movieRepository.getAllMovies()
         response.enqueue(object : Callback<APIResponse> {
             override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>) {
                 _movieList.postValue(response.body()?.movies)
-                Log.i("res", response.body()?.movies.toString())
             }
 
             override fun onFailure(call: Call<APIResponse>, t: Throwable) {
@@ -38,7 +42,6 @@ class MovieViewModel : ViewModel() {
         response.enqueue(object : Callback<APIResponse> {
             override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>) {
                 _currentMovieList.postValue(response.body()?.movies)
-                Log.i("res", response.body()?.movies.toString())
             }
 
             override fun onFailure(call: Call<APIResponse>, t: Throwable) {
@@ -46,4 +49,19 @@ class MovieViewModel : ViewModel() {
             }
         })
     }
+
+    fun getMoviesByName(movieRepository: MovieRepository, query: String) {
+        val response = movieRepository.getMoviesByName(query)
+        response.enqueue(object : Callback<APIResponse> {
+            override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>) {
+                _searchMovieList.postValue(response.body()?.movies)
+            }
+
+            override fun onFailure(call: Call<APIResponse>, t: Throwable) {
+                errorMessage.postValue(t.message)
+            }
+        })
+    }
+
+
 }

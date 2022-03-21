@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.everest.moviedb" >
+    package="com.everest.moviedb">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,13 +11,23 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MovieDB" >
+        android:theme="@style/Theme.MovieDB">
+        <activity
+            android:name=".SearchableActivity"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.moviedb"
+                android:resource="@xml/searchable"/>
+        </activity>
+
         <activity
             android:name=".MovieDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
