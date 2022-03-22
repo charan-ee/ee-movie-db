@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.everest.moviedb.databinding.CurrentMovieLayoutBinding
-import com.everest.moviedb.databinding.MovielistItemBinding
 import com.everest.moviedb.model.Movie
 import com.everest.moviedb.model.MovieRepository
 import java.lang.RuntimeException
@@ -16,7 +15,6 @@ import java.lang.RuntimeException
 class CurrentMovieFragment : Fragment(R.layout.current_movie_layout) {
 
     lateinit var binding: CurrentMovieLayoutBinding
-    lateinit var movieItemBinding: MovielistItemBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +28,7 @@ class CurrentMovieFragment : Fragment(R.layout.current_movie_layout) {
         super.onViewCreated(view, savedInstanceState)
 
         val viewModel = activity?.let { ViewModelProvider(it)[MovieViewModel::class.java] }
-            ?: throw RuntimeException("No activity found")
+            ?: throw RuntimeException(R.string.error_no_activity_found.toString())
         val movieRepository = MovieRepository(RetrofitClient.getClient())
         val currentMovieRV = binding.currentMovieRV
         currentMovieRV.layoutManager = LinearLayoutManager(activity).apply {
