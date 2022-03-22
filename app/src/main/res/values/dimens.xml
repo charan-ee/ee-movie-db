@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_movie_details_CL">20dp</dimen>
+    <dimen name="height_movie_image_IV">145dp</dimen>
+    <dimen name="margintop_movie_image_IV">8dp</dimen>
+    <dimen name="margin_bottom_moviedetails_name_TV">560dp</dimen>
+    <dimen name="margin_movie_item_CL">12dp</dimen>
+    <dimen name="height_movie_item_IV">148dp</dimen>
+    <dimen name="marginstart_movie_item_name_TV">16dp</dimen>
+    <dimen name="margintop_movie_item_name_TV">16dp</dimen>
+    <dimen name="margin_start_movie_item_date_TV">20dp</dimen>
+    <dimen name="margin_top_movie_item_date_TV">15dp</dimen>
+    <dimen name="margin_start_movievote_TV">20dp</dimen>
+    <dimen name="margin_top_movievote_TV">15dp</dimen>
+</resources>
