@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.everest.moviedb.databinding.PopularMovieLayoutBinding
 import com.everest.moviedb.model.Movie
+import com.everest.moviedb.model.MovieDatabase
 import com.everest.moviedb.model.MovieRepository
 import java.lang.RuntimeException
 
@@ -25,7 +26,6 @@ class PopularMovieFragment : Fragment(R.layout.popular_movie_layout) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val viewModel = activity?.let { ViewModelProvider (it)[MovieViewModel::class.java]}?:throw RuntimeException("No activity found")
         val movieRepository = MovieRepository(RetrofitClient.getClient())
         val popularMovieRV= binding.popularMovieRV
