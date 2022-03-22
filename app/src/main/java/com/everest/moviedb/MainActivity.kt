@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         mainScreenPager = findViewById(R.id.home_screen_pager)
-        val movieTabAdapter = MovieTabAdapter(supportFragmentManager)
+        val movieTabAdapter = MovieTabAdapter(supportFragmentManager, applicationContext)
         mainScreenPager.adapter = movieTabAdapter
 
         val tabLayout = findViewById<TabLayout>(R.id.home_screen_tab_layout)
