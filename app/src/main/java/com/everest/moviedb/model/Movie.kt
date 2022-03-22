@@ -1,7 +1,9 @@
 package com.everest.moviedb.model
 
+import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "movie_details")
 data class Movie(
     @SerializedName("id")
     val id: Int,

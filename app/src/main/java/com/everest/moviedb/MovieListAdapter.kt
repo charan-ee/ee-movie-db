@@ -22,9 +22,9 @@ class MovieListAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<M
 
     override fun onBindViewHolder(holder: MovieListItemViewHolder, position: Int) {
         val movie = movies[position]
-        val imageURL = R.string.imageUrl_poster.toString() + movie.imageUrl
+        val imageURL = "https://image.tmdb.org/t/p/w200" + movie.imageUrl
         holder.nameTV.text = movie.name
-        holder.releaseDateTV.text = movie.release_date.toString()
+        holder.releaseDateTV.text = movie.release_date
         holder.ratingTV.text = movie.rating
 
         Glide.with(holder.itemView.context).load(imageURL).into(holder.movieImage)

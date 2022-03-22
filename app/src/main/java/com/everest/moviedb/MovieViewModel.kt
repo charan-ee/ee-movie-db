@@ -1,16 +1,16 @@
 package com.everest.moviedb
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.everest.moviedb.model.APIResponse
-import com.everest.moviedb.model.Movie
-import com.everest.moviedb.model.MovieRepository
+import com.everest.moviedb.model.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MovieViewModel : ViewModel() {
+class MovieViewModel() : ViewModel() {
+
     private val _movieList = MutableLiveData(listOf(Movie(0, "", "", "", "", "", "", "")))
     val errorMessage = MutableLiveData<String>()
     val movieList: LiveData<List<Movie>> = _movieList
@@ -20,7 +20,6 @@ class MovieViewModel : ViewModel() {
 
     private val _searchMovieList = MutableLiveData(listOf(Movie(0, "", "", "", "", "", "", "")))
     val searchMovieList: LiveData<List<Movie>> = _searchMovieList
-
 
 
     fun getAllMovies(movieRepository: MovieRepository) {

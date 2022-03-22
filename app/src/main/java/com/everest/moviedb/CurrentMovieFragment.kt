@@ -28,7 +28,7 @@ class CurrentMovieFragment : Fragment(R.layout.current_movie_layout) {
         super.onViewCreated(view, savedInstanceState)
 
         val viewModel = activity?.let { ViewModelProvider(it)[MovieViewModel::class.java] }
-            ?: throw RuntimeException(R.string.error_no_activity_found.toString())
+            ?: throw RuntimeException("No Activity Found")
         val movieRepository = MovieRepository(RetrofitClient.getClient())
         val currentMovieRV = binding.currentMovieRV
         currentMovieRV.layoutManager = LinearLayoutManager(activity).apply {

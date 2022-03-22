@@ -1,12 +1,14 @@
 package com.everest.moviedb
 
+import android.content.res.Resources
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import com.everest.moviedb.R.*
 
 class MovieTabAdapter(fragmentManager: FragmentManager):  FragmentStatePagerAdapter(fragmentManager) {
     val categories = listOf(
-        R.string.tab_popular.toString(),
-        R.string.tab_current.toString()
+        "POPULAR",
+        "CURRENT"
     )
 
     override fun getCount(): Int {
@@ -17,7 +19,7 @@ class MovieTabAdapter(fragmentManager: FragmentManager):  FragmentStatePagerAdap
         when(position){
             0 -> PopularMovieFragment()
             1 -> CurrentMovieFragment()
-            else -> error(R.string.error_no_position.toString())
+            else -> error("Position doesn't exist")
         }
 
     override fun getPageTitle(position: Int) = categories[position]

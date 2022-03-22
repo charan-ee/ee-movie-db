@@ -13,12 +13,4 @@
     <string name="font_sans_serif">sans-serif</string>
     <string name="font_sans_serif_condensed">sans-serif-condensed</string>
 
-    <string name="error_no_activity_found">No Activity Found</string>
-    <string name="error_no_position">Position doesn\'t exist</string>
-
-    <string name="imageUrl_poster">https://image.tmdb.org/t/p/w200</string>
-    <string name="tab_popular">Popular</string>
-    <string name="tab_current">Current</string>
-    <string name="API_BaseUrl">https://api.themoviedb.org/3/</string>
-
 </resources>
