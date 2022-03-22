@@ -27,16 +27,16 @@ class CurrentMovieFragment : Fragment(R.layout.current_movie_layout) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = activity?.let { ViewModelProvider(it)[MovieViewModel::class.java] }
-            ?: throw RuntimeException(this.resources.getString(R.string.error_no_activity_found))
         val movieRepository = MovieRepository(RetrofitClient.getClient())
+        val viewModel = activity?.let { ViewModelProvider (it, MovieViewModelFactory(movieRepository))[MovieViewModel::class.java]}?:throw RuntimeException("No activity found")
         val currentMovieRV = binding.currentMovieRV
+
         currentMovieRV.layoutManager = LinearLayoutManager(activity).apply {
             orientation = LinearLayoutManager.VERTICAL
         }
         currentMovieRV.adapter = MovieListAdapter(listOf(Movie(0, "", "", "", "", "", "", "")))
 
-        viewModel.getCurrentPlayingMovies(movieRepository)
+        viewModel.getCurrentPlayingMovies()
         viewModel.currentMovieList.observe(viewLifecycleOwner) {
             currentMovieRV.adapter = MovieListAdapter(it)
         }

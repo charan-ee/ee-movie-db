@@ -36,15 +36,17 @@ class SearchableActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
-                val viewModel = ViewModelProvider(this@SearchableActivity)[MovieViewModel::class.java]
+
                 val movieRepository = MovieRepository(RetrofitClient.getClient())
+                val viewModel = ViewModelProvider(this@SearchableActivity, MovieViewModelFactory(movieRepository))[MovieViewModel::class.java]
                 val searchMovieRV = binding.searchMovieRV
+
                 searchMovieRV.layoutManager = LinearLayoutManager(this@SearchableActivity).apply {
                     orientation = LinearLayoutManager.VERTICAL
                 }
                 searchMovieRV.adapter = MovieListAdapter(listOf(Movie(0, "", "", "", "", "", "", "")))
 
-                viewModel.getMoviesByName(movieRepository, newText)
+                viewModel.getMoviesByName(newText)
                 viewModel.searchMovieList.observe(this@SearchableActivity) {
                     searchMovieRV.adapter = MovieListAdapter(it)
                 }

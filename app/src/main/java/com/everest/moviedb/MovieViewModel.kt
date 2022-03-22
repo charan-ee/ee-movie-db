@@ -10,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MovieViewModel : ViewModel() {
+class MovieViewModel(private val movieRepository: MovieRepository) : ViewModel() {
     private val _movieList = MutableLiveData(listOf(Movie(0, "", "", "", "", "", "", "")))
     val errorMessage = MutableLiveData<String>()
     val movieList: LiveData<List<Movie>> = _movieList
@@ -21,9 +21,7 @@ class MovieViewModel : ViewModel() {
     private val _searchMovieList = MutableLiveData(listOf(Movie(0, "", "", "", "", "", "", "")))
     val searchMovieList: LiveData<List<Movie>> = _searchMovieList
 
-
-
-    fun getAllMovies(movieRepository: MovieRepository) {
+    fun getAllMovies() {
         val response = movieRepository.getAllMovies()
         response.enqueue(object : Callback<APIResponse> {
             override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>) {
@@ -36,7 +34,7 @@ class MovieViewModel : ViewModel() {
         })
     }
 
-    fun getCurrentPlayingMovies(movieRepository: MovieRepository) {
+    fun getCurrentPlayingMovies() {
         val response = movieRepository.getCurrentPlayingMovies()
         response.enqueue(object : Callback<APIResponse> {
             override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>) {
@@ -49,7 +47,7 @@ class MovieViewModel : ViewModel() {
         })
     }
 
-    fun getMoviesByName(movieRepository: MovieRepository, query: String) {
+    fun getMoviesByName(query: String) {
         val response = movieRepository.getMoviesByName(query)
         response.enqueue(object : Callback<APIResponse> {
             override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>) {
