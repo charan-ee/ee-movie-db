@@ -26,17 +26,25 @@ class PopularMovieFragment : Fragment(R.layout.popular_movie_layout) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = activity?.let { ViewModelProvider (it)[MovieViewModel::class.java]}?:throw RuntimeException("No activity found")
-        val movieRepository = MovieRepository(RetrofitClient.getClient())
+
+//        val movieDatabase = MovieDatabase.getInstance(requireContext())
+
+        val movieRepository = (requireContext().applicationContext as MovieApplication).movieRepository
+
+        val viewModel = activity?.let {
+            ViewModelProvider (it, MovieViewModelFactory(movieRepository))[MovieViewModel::class.java]
+        }?:throw RuntimeException("No activity found")
         val popularMovieRV= binding.popularMovieRV
+
         popularMovieRV.layoutManager = LinearLayoutManager(activity).apply {
             orientation = LinearLayoutManager.VERTICAL
         }
         popularMovieRV.adapter=MovieListAdapter(listOf(Movie(0,"","","","", "", "", "")))
 
-        viewModel.getAllMovies(movieRepository)
+        viewModel.getAllMovies()
         viewModel.movieList.observe(viewLifecycleOwner){
             popularMovieRV.adapter=MovieListAdapter(it)
+
         }
 
     }

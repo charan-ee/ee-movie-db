@@ -1,20 +1,23 @@
 package com.everest.moviedb.model
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "movie_details")
 data class Movie(
+
     @SerializedName("id")
     val id: Int,
 
+    @PrimaryKey
     @SerializedName("original_title")
     val name: String,
 
     @SerializedName("poster_path")
     val imageUrl: String,
 
-    @SerializedName("background_path")
+    @SerializedName("backdrop_path")
     val backgroundUrl: String,
 
     @SerializedName("original_language")

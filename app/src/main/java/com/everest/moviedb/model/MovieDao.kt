@@ -3,6 +3,7 @@ package com.everest.moviedb.model
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import retrofit2.Call
 
@@ -10,10 +11,11 @@ import retrofit2.Call
 interface MovieDao {
 
     @Query("select * from movie_details")
-    fun getPopularMovies(): LiveData<List<Movie>>
+    fun getPopularMovies(): List<Movie>
 
+    @Query("select * from movie_details where release_date > '2022-01-01'")
     fun getCurrentMovies(): List<Movie>
 
-    @Insert
-    fun insertAllMovies(vararg movies: List<Movie>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllMovies(movies: List<Movie>)
 }
