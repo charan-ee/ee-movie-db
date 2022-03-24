@@ -9,12 +9,18 @@ object RetrofitClient {
 
     const val BASE_URL = "https://api.themoviedb.org/3/"
 
+    fun isInstanceCreated(): Boolean {
+        return movieService != null
+    }
+
     fun getClient(): MovieService {
+        if (movieService == null) {
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
             movieService = retrofit.create(MovieService::class.java)
+        }
         return movieService!!
     }
 }
