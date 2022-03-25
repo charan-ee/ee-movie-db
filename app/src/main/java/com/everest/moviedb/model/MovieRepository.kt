@@ -16,6 +16,7 @@ class MovieRepository constructor(
 
         response.enqueue(object : Callback<APIResponse> {
             override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>) {
+                response.isSuccessful
                 if (response.body() != null) {
                     movieList = response.body()?.movies!!
                     movieDatabaseClient.movieDao().insertAllMovies(movieList)
