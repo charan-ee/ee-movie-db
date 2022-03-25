@@ -1,11 +1,9 @@
 package com.everest.moviedb.model
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import retrofit2.Call
 
 @Dao
 interface MovieDao {

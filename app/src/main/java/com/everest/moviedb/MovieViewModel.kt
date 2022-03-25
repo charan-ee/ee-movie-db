@@ -1,8 +1,10 @@
 package com.everest.moviedb
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.everest.moviedb.callbacks.ApiResponseCallback
 import com.everest.moviedb.model.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,25 +24,33 @@ class MovieViewModel(private val movieRepository: MovieRepository) : ViewModel()
 
 
     fun getAllMovies() {
-        val response = movieRepository.getAllMovies()
-        _movieList.value = response
+        movieRepository.getAllMovies(object : ApiResponseCallback {
+            override fun onSuccess(apiResponse: List<Movie>) {
+                Log.i("response", apiResponse.toString())
+                _movieList.value = apiResponse
+            }
+            override fun onFailure(message: String) {
+            }
+        })
     }
 
 
     fun getCurrentPlayingMovies() {
-        val response = movieRepository.getCurrentPlayingMovies()
-        _currentMovieList.value = response
+        movieRepository.getCurrentPlayingMovies(object : ApiResponseCallback {
+            override fun onSuccess(apiResponse: List<Movie>) {
+                _currentMovieList.value = apiResponse
+            }
+            override fun onFailure(message: String) {
+            }
+        })
     }
 
     fun getMoviesByName(query: String) {
-        val response = movieRepository.getMoviesByName(query)
-        response.enqueue(object : Callback<APIResponse> {
-            override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>) {
-                _searchMovieList.postValue(response.body()?.movies)
+        movieRepository.getMoviesByName(query, object : ApiResponseCallback {
+            override fun onSuccess(apiResponse: List<Movie>) {
+                _searchMovieList.value = apiResponse
             }
-
-            override fun onFailure(call: Call<APIResponse>, t: Throwable) {
-                errorMessage.postValue(t.message)
+            override fun onFailure(message: String) {
             }
         })
     }
