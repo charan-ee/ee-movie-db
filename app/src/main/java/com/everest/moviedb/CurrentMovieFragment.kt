@@ -8,9 +8,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.everest.moviedb.databinding.CurrentMovieLayoutBinding
-import com.everest.moviedb.model.Movie
-import com.everest.moviedb.model.MovieDatabase
-import com.everest.moviedb.model.MovieRepository
 import java.lang.RuntimeException
 
 class CurrentMovieFragment : Fragment(R.layout.current_movie_layout) {
@@ -36,7 +33,7 @@ class CurrentMovieFragment : Fragment(R.layout.current_movie_layout) {
         currentMovieRV.layoutManager = LinearLayoutManager(activity).apply {
             orientation = LinearLayoutManager.VERTICAL
         }
-        currentMovieRV.adapter = MovieListAdapter(listOf(Movie(0, "", "", "", "", "", "", "")))
+        currentMovieRV.adapter = MovieListAdapter()
 
         viewModel.getCurrentPlayingMovies()
         viewModel.currentMovieList.observe(viewLifecycleOwner) {

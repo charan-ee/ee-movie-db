@@ -11,7 +11,7 @@ import com.everest.moviedb.utils.IMAGE_URL
 import com.everest.moviedb.utils.NAME
 import com.everest.moviedb.utils.OVERVIEW
 
-class MovieListAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<MovieListItemViewHolder>() {
+class MovieListAdapter(private val movies: List<Movie> = ArrayList<Movie>()) : RecyclerView.Adapter<MovieListItemViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListItemViewHolder {

@@ -40,7 +40,7 @@ class SearchableActivity : AppCompatActivity() {
                 searchMovieRV.layoutManager = LinearLayoutManager(this@SearchableActivity).apply {
                     orientation = LinearLayoutManager.VERTICAL
                 }
-                searchMovieRV.adapter = MovieListAdapter(listOf(Movie(0, "", "", "", "", "", "", "")))
+                searchMovieRV.adapter = MovieListAdapter()
 
                 viewModel.getMoviesByName(newText)
                 viewModel.searchMovieList.observe(this@SearchableActivity) {
