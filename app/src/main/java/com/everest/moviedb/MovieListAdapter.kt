@@ -37,7 +37,7 @@ class MovieListAdapter(private val movies: List<MovieDetail> = ArrayList<MovieDe
             intent.putExtra(IMAGE_URL, imageURL)
             view.context.startActivity(intent)
         }
-    }i
+    }
 
     override fun getItemCount(): Int = movies.size
 
