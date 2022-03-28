@@ -1,7 +1,8 @@
 package com.everest.moviedb.model
 
-import android.util.Log
 import com.everest.moviedb.callbacks.ApiResponseCallback
+import com.everest.moviedb.ui.MovieDetail
+import com.everest.moviedb.utils.IMAGE_BASE_URL
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,7 +19,7 @@ class MovieRepository constructor(
         response.enqueue(object : Callback<APIResponse> {
             override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>) {
                 if (response.body() != null) {
-                    response.body()?.movies?.let { apiResponseCallback.onSuccess(it) }
+                    apiResponseCallback.onSuccess(convertDTOIntoUIModel(response.body()!!.movies))
                     movieList = response.body()?.movies!!
                     movieDatabaseClient.movieDao().insertAllMovies(movieList)
                 } else {
@@ -28,7 +29,7 @@ class MovieRepository constructor(
 
             override fun onFailure(call: Call<APIResponse>, t: Throwable) {
                 movieList = movieDatabaseClient.movieDao().getPopularMovies()
-                apiResponseCallback.onSuccess(movieList)
+                apiResponseCallback.onSuccess(convertDTOIntoUIModel(movieList))
             }
         })
     }
@@ -40,7 +41,7 @@ class MovieRepository constructor(
         response.enqueue(object : Callback<APIResponse> {
             override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>) {
                 if (response.body() != null) {
-                    response.body()?.movies?.let { apiResponseCallback.onSuccess(it) }
+                    response.body()?.movies?.let { apiResponseCallback.onSuccess(convertDTOIntoUIModel(it)) }
                     movieList = response.body()?.movies!!
                     movieDatabaseClient.movieDao().insertAllMovies(movieList)
                 }else {
@@ -50,7 +51,7 @@ class MovieRepository constructor(
 
             override fun onFailure(call: Call<APIResponse>, t: Throwable) {
                 movieList = movieDatabaseClient.movieDao().getCurrentMovies()
-                apiResponseCallback.onSuccess(movieList)
+                apiResponseCallback.onSuccess(convertDTOIntoUIModel(movieList))
             }
         })
     }
@@ -61,7 +62,7 @@ class MovieRepository constructor(
         response.enqueue(object : Callback<APIResponse> {
             override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>) {
                 if (response.body() != null) {
-                    response.body()?.movies?.let { apiResponseCallback.onSuccess(it) }
+                    response.body()?.movies?.let { apiResponseCallback.onSuccess(convertDTOIntoUIModel(it)) }
                 }else {
                     apiResponseCallback.onFailure("Error in the callback")
                 }
@@ -69,5 +70,13 @@ class MovieRepository constructor(
             override fun onFailure(call: Call<APIResponse>, t: Throwable) {
             }
         })
+    }
+
+    private fun convertDTOIntoUIModel(movies: List<Movie>): List<MovieDetail> {
+        return movies.map {
+            MovieDetail(
+                it.name, IMAGE_BASE_URL + it.imageUrl, it.backgroundUrl, it.language, it.desc, it.release_date, it.rating
+            )
+        }
     }
 }

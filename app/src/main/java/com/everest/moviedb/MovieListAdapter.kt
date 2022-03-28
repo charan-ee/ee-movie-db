@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.everest.moviedb.model.Movie
+import com.everest.moviedb.ui.MovieDetail
 import com.everest.moviedb.utils.IMAGE_URL
 import com.everest.moviedb.utils.NAME
 import com.everest.moviedb.utils.OVERVIEW
 
-class MovieListAdapter(private val movies: List<Movie> = ArrayList<Movie>()) : RecyclerView.Adapter<MovieListItemViewHolder>() {
+class MovieListAdapter(private val movies: List<MovieDetail> = ArrayList<MovieDetail>()) : RecyclerView.Adapter<MovieListItemViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListItemViewHolder {
@@ -22,7 +23,7 @@ class MovieListAdapter(private val movies: List<Movie> = ArrayList<Movie>()) : R
 
     override fun onBindViewHolder(holder: MovieListItemViewHolder, position: Int) {
         val movie = movies[position]
-        val imageURL = "https://image.tmdb.org/t/p/w200" + movie.imageUrl
+        val imageURL = movie.imageUrl
         holder.nameTV.text = movie.name
         holder.releaseDateTV.text = movie.release_date
         holder.ratingTV.text = movie.rating
@@ -36,7 +37,7 @@ class MovieListAdapter(private val movies: List<Movie> = ArrayList<Movie>()) : R
             intent.putExtra(IMAGE_URL, imageURL)
             view.context.startActivity(intent)
         }
-    }
+    }i
 
     override fun getItemCount(): Int = movies.size
 
