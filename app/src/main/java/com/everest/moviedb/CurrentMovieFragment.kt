@@ -1,23 +1,26 @@
 package com.everest.moviedb
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.everest.moviedb.databinding.CurrentMovieLayoutBinding
-import java.lang.RuntimeException
+import com.everest.moviedb.ui.MovieDetail
+import com.everest.moviedb.utils.MOVIE_DETAILS
 
 class CurrentMovieFragment : Fragment(R.layout.current_movie_layout) {
 
-    lateinit var binding: CurrentMovieLayoutBinding
+    private lateinit var binding: CurrentMovieLayoutBinding
+    private lateinit var viewModel: MovieViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = CurrentMovieLayoutBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -25,20 +28,43 @@ class CurrentMovieFragment : Fragment(R.layout.current_movie_layout) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movieRepository = (requireContext().applicationContext as MovieApplication).movieRepository
-        val viewModel = activity?.let { ViewModelProvider(it, MovieViewModelFactory(movieRepository))[MovieViewModel::class.java] }
-            ?: throw RuntimeException("No Activity Found")
-        val currentMovieRV = binding.currentMovieRV
+        val movieRepository =
+            (requireContext().applicationContext as MovieApplication).movieRepository
 
-        currentMovieRV.layoutManager = LinearLayoutManager(activity).apply {
-            orientation = LinearLayoutManager.VERTICAL
+        viewModel = activity?.let {
+            ViewModelProvider(
+                it,
+                MovieViewModelFactory(movieRepository)
+            )[MovieViewModel::class.java]
         }
-        currentMovieRV.adapter = MovieListAdapter()
+            ?: throw RuntimeException("No Activity Found")
+
+        viewModel.currentMovieList.observe(viewLifecycleOwner) {
+            setAdapter(it)
+        }
 
         viewModel.getCurrentPlayingMovies()
-        viewModel.currentMovieList.observe(viewLifecycleOwner) {
-            currentMovieRV.adapter = MovieListAdapter(it)
-        }
 
+    }
+
+    private fun setAdapter(movies: List<MovieDetail>?) {
+        binding.currentMovieRV.layoutManager = LinearLayoutManager(activity).apply {
+            orientation = LinearLayoutManager.VERTICAL
+        }
+        val movieAdapter = movies?.let { MovieListAdapter(it) }
+        binding.currentMovieRV.adapter = movieAdapter
+
+        movieAdapter?.setCardClickListener(object : MovieListAdapter.CardClickListener {
+            override fun onCardClick(position: Int) {
+                getMovieDetails(viewModel.currentMovieList.value!![position])
+            }
+        })
+
+    }
+
+    fun getMovieDetails(movie: MovieDetail) {
+        val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
+        intent.putExtra(MOVIE_DETAILS, movie)
+        startActivity(intent)
     }
 }

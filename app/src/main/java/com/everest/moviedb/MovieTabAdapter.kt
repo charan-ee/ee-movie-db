@@ -1,11 +1,10 @@
 package com.everest.moviedb
 
-import android.content.res.Resources
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.everest.moviedb.R.*
 
-class MovieTabAdapter(fragmentManager: FragmentManager):  FragmentStatePagerAdapter(fragmentManager) {
+class MovieTabAdapter(fragmentManager: FragmentManager) :
+    FragmentStatePagerAdapter(fragmentManager) {
     val categories = listOf(
         "POPULAR",
         "CURRENT"
@@ -16,7 +15,7 @@ class MovieTabAdapter(fragmentManager: FragmentManager):  FragmentStatePagerAdap
     }
 
     override fun getItem(position: Int) =
-        when(position){
+        when (position) {
             0 -> PopularMovieFragment()
             1 -> CurrentMovieFragment()
             else -> error("Position doesn't exist")

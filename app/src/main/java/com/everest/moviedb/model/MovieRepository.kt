@@ -75,7 +75,7 @@ class MovieRepository constructor(
     private fun convertDTOIntoUIModel(movies: List<Movie>): List<MovieDetail> {
         return movies.map {
             MovieDetail(
-                it.name, IMAGE_BASE_URL + it.imageUrl, it.backgroundUrl, it.language, it.desc, it.release_date, it.rating
+                it.name, IMAGE_BASE_URL + it.imageUrl, it.language, it.desc, it.release_date, it.rating
             )
         }
     }

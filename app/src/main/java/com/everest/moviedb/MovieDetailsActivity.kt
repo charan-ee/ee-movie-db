@@ -1,26 +1,23 @@
 package com.everest.moviedb
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.everest.moviedb.databinding.ActivityMovieDetailsBinding
-import com.everest.moviedb.utils.*
+import com.everest.moviedb.ui.MovieDetail
 
 class MovieDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
 
-        val  binding = ActivityMovieDetailsBinding.inflate(layoutInflater)
+        val binding = ActivityMovieDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val name = intent.extras?.getString(NAME)
-        val description = intent.extras?.getString(OVERVIEW)
-        val imageUrl = intent.extras?.getString(IMAGE_URL)
+        val movieDetails = intent.getParcelableExtra<MovieDetail>("MOVIE_DETAILS")
 
-        binding.movieNameTv.text = name
-        binding.movieDetailDescTV.text = description
-        Glide.with(this).load(imageUrl).into(binding.movieImageIV)
-
+        binding.movieNameTv.text = movieDetails!!.name
+        binding.movieDetailDescTV.text = movieDetails.desc
+        Glide.with(this).load(movieDetails.imageUrl).into(binding.movieImageIV)
     }
 }

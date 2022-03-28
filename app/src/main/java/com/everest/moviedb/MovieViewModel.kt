@@ -24,13 +24,15 @@ class MovieViewModel(private val movieRepository: MovieRepository) : ViewModel()
     val searchMovieList: LiveData<List<MovieDetail>> = _searchMovieList
 
 
-    fun getAllMovies() {
+    fun getPopularMovies() {
         movieRepository.getAllMovies(object : ApiResponseCallback {
             override fun onSuccess(apiResponse: List<MovieDetail>) {
                 Log.i("response", apiResponse.toString())
                 _movieList.value = apiResponse
             }
+
             override fun onFailure(message: String) {
+                errorMessage.value = message
             }
         })
     }
@@ -41,7 +43,9 @@ class MovieViewModel(private val movieRepository: MovieRepository) : ViewModel()
             override fun onSuccess(apiResponse: List<MovieDetail>) {
                 _currentMovieList.value = apiResponse
             }
+
             override fun onFailure(message: String) {
+                errorMessage.value = message
             }
         })
     }
@@ -51,6 +55,7 @@ class MovieViewModel(private val movieRepository: MovieRepository) : ViewModel()
             override fun onSuccess(apiResponse: List<MovieDetail>) {
                 _searchMovieList.value = apiResponse
             }
+
             override fun onFailure(message: String) {
             }
         })

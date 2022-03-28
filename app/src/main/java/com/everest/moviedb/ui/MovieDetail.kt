@@ -1,13 +1,14 @@
 package com.everest.moviedb.ui
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
 
-data class MovieDetail (
+@Parcelize
+data class MovieDetail(
     val name: String,
 
     val imageUrl: String,
-
-    val backgroundUrl: String,
 
     val language: String,
 
@@ -17,4 +18,4 @@ data class MovieDetail (
 
     val rating: String
 
-    )
+) : Parcelable

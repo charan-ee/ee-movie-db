@@ -2,6 +2,7 @@ package com.everest.moviedb
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -9,64 +10,81 @@ import android.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.everest.moviedb.databinding.ActivitySearchableBinding
-import com.everest.moviedb.model.Movie
 import com.everest.moviedb.model.MovieRepository
+import com.everest.moviedb.ui.MovieDetail
+import com.everest.moviedb.utils.MOVIE_DETAILS
 
 class SearchableActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivitySearchableBinding
+    private lateinit var binding: ActivitySearchableBinding
+    private lateinit var viewModel: MovieViewModel
+    private lateinit var movieRepository: MovieRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchableBinding.inflate(layoutInflater)
         setContentView(binding.root)
-    }
 
+        movieRepository = (application as MovieApplication).movieRepository
+        viewModel = ViewModelProvider(
+            this@SearchableActivity,
+            MovieViewModelFactory(movieRepository)
+        )[MovieViewModel::class.java]
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.options_search, menu)
-        val searchView: SearchView = menu.findItem(R.id.search).actionView as SearchView
-        searchView.isIconified = false
-
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        (menu.findItem(R.id.search).actionView as SearchView).apply {
-            setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        }
+        val searchView: SearchView = updateSearchView(menu)
+        setSearchManager(menu)
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextChange(newText: String): Boolean {
-                val movieRepository = ( application as MovieApplication).movieRepository
-                val viewModel = ViewModelProvider(this@SearchableActivity, MovieViewModelFactory(movieRepository))[MovieViewModel::class.java]
-                val searchMovieRV = binding.searchMovieRV
-                searchMovieRV.layoutManager = LinearLayoutManager(this@SearchableActivity).apply {
-                    orientation = LinearLayoutManager.VERTICAL
-                }
-                searchMovieRV.adapter = MovieListAdapter()
-
-                viewModel.getMoviesByName(newText)
+            override fun onQueryTextChange(query: String): Boolean {
                 viewModel.searchMovieList.observe(this@SearchableActivity) {
-                    searchMovieRV.adapter = MovieListAdapter(it)
+                    setAdapter(it)
                 }
+                viewModel.getMoviesByName(query)
                 return true
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }
-
         })
-
-//        val closeButton = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
-//
-//        closeButton.setOnClickListener {
-//            val editText = findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
-//            editText.setText("")
-//
-//            searchView.setQuery("", false)
-//            searchView.onActionViewCollapsed()
-//        }
-
-
         return true
+    }
+
+    private fun setSearchManager(menu: Menu) {
+        val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
+        (menu.findItem(R.id.search).actionView as SearchView).apply {
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        }
+    }
+
+    private fun updateSearchView(menu: Menu): SearchView {
+        val searchView: SearchView = menu.findItem(R.id.search).actionView as SearchView
+        searchView.isIconified = false
+        return searchView
+    }
+
+    private fun setAdapter(movies: List<MovieDetail>?) {
+        binding.searchMovieRV.layoutManager = LinearLayoutManager(this).apply {
+            orientation = LinearLayoutManager.VERTICAL
+        }
+
+        val movieAdapter = movies?.let { MovieListAdapter(it) }
+        binding.searchMovieRV.adapter = movieAdapter
+
+        movieAdapter?.setCardClickListener(object : MovieListAdapter.CardClickListener {
+            override fun onCardClick(position: Int) {
+                getMovieDetails(viewModel.searchMovieList.value!![position])
+            }
+        })
+    }
+
+    fun getMovieDetails(movie: MovieDetail) {
+        val intent = Intent(this, MovieDetailsActivity::class.java)
+        intent.putExtra(MOVIE_DETAILS, movie)
+        startActivity(intent)
     }
 
 

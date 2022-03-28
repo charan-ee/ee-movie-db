@@ -1,23 +1,32 @@
 package com.everest.moviedb
 
-import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.everest.moviedb.model.Movie
 import com.everest.moviedb.ui.MovieDetail
-import com.everest.moviedb.utils.IMAGE_URL
-import com.everest.moviedb.utils.NAME
-import com.everest.moviedb.utils.OVERVIEW
 
-class MovieListAdapter(private val movies: List<MovieDetail> = ArrayList<MovieDetail>()) : RecyclerView.Adapter<MovieListItemViewHolder>() {
+class MovieListAdapter(private val movies: List<MovieDetail> = listOf()) :
+    RecyclerView.Adapter<MovieListAdapter.MovieListItemViewHolder>() {
 
+    private lateinit var listener: CardClickListener
+
+    interface CardClickListener {
+        fun onCardClick(position: Int)
+    }
+
+    fun setCardClickListener(cardClickListener: CardClickListener) {
+        listener = cardClickListener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListItemViewHolder {
         return MovieListItemViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.movielist_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.movielist_item, parent, false),
+            this.listener
         )
     }
 
@@ -30,17 +39,28 @@ class MovieListAdapter(private val movies: List<MovieDetail> = ArrayList<MovieDe
 
         Glide.with(holder.itemView.context).load(imageURL).into(holder.movieImage)
 
-        holder.movieItemCL.setOnClickListener { view ->
-            val intent = Intent(view.context, MovieDetailsActivity::class.java)
-            intent.putExtra(OVERVIEW, movie.desc)
-            intent.putExtra(NAME, movie.name)
-            intent.putExtra(IMAGE_URL, imageURL)
-            view.context.startActivity(intent)
-        }
     }
 
     override fun getItemCount(): Int = movies.size
 
+    inner class MovieListItemViewHolder(
+        view: View,
+        cardClickListener: CardClickListener
+    ) : RecyclerView.ViewHolder(view) {
+
+        val nameTV = view.findViewById<TextView>(R.id.movie_name_tv)
+        val releaseDateTV = view.findViewById<TextView>(R.id.movieReleaseDateTV)
+        val ratingTV = view.findViewById<TextView>(R.id.movieVotingTV)
+        val movieImage = view.findViewById<AppCompatImageView>(R.id.movie_image)
+
+        init {
+            view.setOnClickListener {
+                Log.i("hell", "yess")
+                Log.i("ytdfes",adapterPosition.toString())
+                cardClickListener.onCardClick(adapterPosition)
+            }
+        }
+    }
 
 }
 
