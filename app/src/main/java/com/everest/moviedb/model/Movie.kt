@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-@Parcelize
 @Entity(tableName = "movie_details")
 data class Movie(
 
@@ -34,4 +33,4 @@ data class Movie(
 
     @SerializedName("vote_average")
     val rating: String
-): Parcelable
+)
