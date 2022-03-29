@@ -1,15 +1,11 @@
 package com.everest.moviedb
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.everest.moviedb.callbacks.ApiResponseCallback
 import com.everest.moviedb.model.*
 import com.everest.moviedb.ui.MovieDetail
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MovieViewModel(private val movieRepository: MovieRepository) : ViewModel() {
 

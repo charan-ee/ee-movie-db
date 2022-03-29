@@ -12,5 +12,7 @@
     <string name="font_sans_serif_thin">sans-serif-thin</string>
     <string name="font_sans_serif">sans-serif</string>
     <string name="font_sans_serif_condensed">sans-serif-condensed</string>
+    <string name="tab_popular">Popular</string>
+    <string name="tab_current">Current</string>
 
 </resources>
