@@ -55,8 +55,6 @@ class MovieListAdapter(private val movies: List<MovieDetail> = listOf()) :
 
         init {
             view.setOnClickListener {
-                Log.i("hell", "yess")
-                Log.i("ytdfes",adapterPosition.toString())
                 cardClickListener.onCardClick(adapterPosition)
             }
         }

@@ -27,7 +27,6 @@ class MovieViewModel(private val movieRepository: MovieRepository) : ViewModel()
     fun getPopularMovies() {
         movieRepository.getAllMovies(object : ApiResponseCallback {
             override fun onSuccess(apiResponse: List<MovieDetail>) {
-                Log.i("response", apiResponse.toString())
                 _movieList.value = apiResponse
             }
 
