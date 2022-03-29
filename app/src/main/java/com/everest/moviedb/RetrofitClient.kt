@@ -9,12 +9,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClient {
 
     const val BASE_URL = "https://api.themoviedb.org/3/"
-    const val API_KEY = "4fcef1da977950737a961196b2c901e0"
 
     val api_interceptor = Interceptor {
         val originalRequest = it.request()
         val newHttpUrl = originalRequest.url().newBuilder()
-            .addQueryParameter("api_key", API_KEY)
+            .addQueryParameter("api_key", BuildConfig.API_KEY)
             .build()
 
         val newRequest = originalRequest.newBuilder()
