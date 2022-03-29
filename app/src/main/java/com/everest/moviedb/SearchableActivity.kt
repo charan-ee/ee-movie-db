@@ -76,7 +76,7 @@ class SearchableActivity : AppCompatActivity() {
 
         movieAdapter?.setCardClickListener(object : MovieListAdapter.CardClickListener {
             override fun onCardClick(position: Int) {
-                getMovieDetails(viewModel.searchMovieList.value!![position])
+                viewModel.searchMovieList.value?.let { getMovieDetails(it[position]) }
             }
         })
     }
