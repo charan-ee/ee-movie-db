@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:layout_margin="@dimen/margin_movie_item_CL"
+    android:focusable="true"
+    android:id="@+id/movieItemCL">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/movie_image"
+        android:layout_width="148dp"
+        android:layout_height="148dp"
+        android:scaleType="fitEnd"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/movie_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/marginstart_movie_item_name_TV"
+        android:layout_marginTop="@dimen/margintop_movie_item_name_TV"
+        android:fontFamily="@string/font_sans_serif_black"
+        android:text="@string/movie_name_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/movieReleaseDateTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@string/font_sans_serif"
+        android:layout_marginStart="@dimen/margin_start_movie_item_date_TV"
+        android:layout_marginTop="@dimen/margin_top_movie_item_date_TV"
+        android:text="@string/duration_TV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movie_name_tv" />
+
+    <TextView
+        android:id="@+id/movieVotingTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@string/font_sans_serif_condensed"
+        android:layout_marginStart="@dimen/margin_start_movievote_TV"
+        android:layout_marginTop="@dimen/margin_top_movievote_TV"
+        android:text="@string/rating_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movieReleaseDateTV" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

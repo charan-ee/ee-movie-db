@@ -1,0 +1,60 @@
+package com.everest.moviedb
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.everest.moviedb.callbacks.ApiResponseCallback
+import com.everest.moviedb.model.*
+import com.everest.moviedb.ui.MovieDetail
+
+class MovieViewModel(private val movieRepository: MovieRepository) : ViewModel() {
+
+    private var _movieList = MutableLiveData<List<MovieDetail>>()
+    val errorMessage = MutableLiveData<String>()
+    val movieList: LiveData<List<MovieDetail>> = _movieList
+
+    private val _currentMovieList = MutableLiveData<List<MovieDetail>>()
+    val currentMovieList: LiveData<List<MovieDetail>> = _currentMovieList
+
+    private val _searchMovieList = MutableLiveData<List<MovieDetail>>()
+    val searchMovieList: LiveData<List<MovieDetail>> = _searchMovieList
+
+
+    fun getPopularMovies() {
+        movieRepository.getAllMovies(object : ApiResponseCallback {
+            override fun onResponse(apiResponse: List<MovieDetail>) {
+                _movieList.value = apiResponse
+            }
+
+            override fun onFailure(message: String) {
+                errorMessage.value = message
+            }
+        })
+    }
+
+
+    fun getCurrentPlayingMovies() {
+        movieRepository.getCurrentPlayingMovies(object : ApiResponseCallback {
+            override fun onResponse(apiResponse: List<MovieDetail>) {
+                _currentMovieList.value = apiResponse
+            }
+
+            override fun onFailure(message: String) {
+                errorMessage.value = message
+            }
+        })
+    }
+
+    fun getMoviesByName(query: String) {
+        movieRepository.getMoviesByName(query, object : ApiResponseCallback {
+            override fun onResponse(apiResponse: List<MovieDetail>) {
+                _searchMovieList.value = apiResponse
+            }
+
+            override fun onFailure(message: String) {
+            }
+        })
+    }
+
+
+}
