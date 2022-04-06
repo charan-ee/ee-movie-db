@@ -2,10 +2,10 @@ package com.everest.moviedb
 
 import android.app.SearchManager
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.everest.moviedb.databinding.ActivitySearchableBinding
@@ -29,6 +29,14 @@ class SearchableActivity : AppCompatActivity() {
             this@SearchableActivity,
             MovieViewModelFactory(movieRepository)
         )[MovieViewModel::class.java]
+
+        searchMovie()
+    }
+
+    private fun searchMovie() {
+        viewModel.searchMovieList.observe(this@SearchableActivity) {
+            setAdapter(it)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -38,9 +46,6 @@ class SearchableActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(query: String): Boolean {
-                viewModel.searchMovieList.observe(this@SearchableActivity) {
-                    setAdapter(it)
-                }
                 viewModel.getMoviesByName(query)
                 return true
             }
