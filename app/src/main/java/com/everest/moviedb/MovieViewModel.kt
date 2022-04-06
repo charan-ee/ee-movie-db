@@ -22,7 +22,7 @@ class MovieViewModel(private val movieRepository: MovieRepository) : ViewModel()
 
     fun getPopularMovies() {
         movieRepository.getAllMovies(object : ApiResponseCallback {
-            override fun onSuccess(apiResponse: List<MovieDetail>) {
+            override fun onResponse(apiResponse: List<MovieDetail>) {
                 _movieList.value = apiResponse
             }
 
@@ -35,7 +35,7 @@ class MovieViewModel(private val movieRepository: MovieRepository) : ViewModel()
 
     fun getCurrentPlayingMovies() {
         movieRepository.getCurrentPlayingMovies(object : ApiResponseCallback {
-            override fun onSuccess(apiResponse: List<MovieDetail>) {
+            override fun onResponse(apiResponse: List<MovieDetail>) {
                 _currentMovieList.value = apiResponse
             }
 
@@ -47,7 +47,7 @@ class MovieViewModel(private val movieRepository: MovieRepository) : ViewModel()
 
     fun getMoviesByName(query: String) {
         movieRepository.getMoviesByName(query, object : ApiResponseCallback {
-            override fun onSuccess(apiResponse: List<MovieDetail>) {
+            override fun onResponse(apiResponse: List<MovieDetail>) {
                 _searchMovieList.value = apiResponse
             }
 

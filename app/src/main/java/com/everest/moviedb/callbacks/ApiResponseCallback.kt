@@ -5,7 +5,7 @@ import com.everest.moviedb.ui.MovieDetail
 
 interface ApiResponseCallback {
 
-    fun onSuccess(apiResponse: List<MovieDetail>);
+    fun onResponse(apiResponse: List<MovieDetail>);
 
     fun onFailure(message: String)
 }
