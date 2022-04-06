@@ -17,8 +17,8 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         val movieDetails = intent.getParcelableExtra<MovieDetail>(MOVIE_DETAILS)
 
-        binding.movieNameTv.text = movieDetails!!.name
-        binding.movieDetailDescTV.text = movieDetails.desc
-        Glide.with(this).load(movieDetails.imageUrl).into(binding.movieImageIV)
+        binding.movieNameTv.text = movieDetails?.name
+        binding.movieDetailDescTV.text = movieDetails?.desc
+        Glide.with(this).load(movieDetails?.imageUrl).into(binding.movieImageIV)
     }
 }

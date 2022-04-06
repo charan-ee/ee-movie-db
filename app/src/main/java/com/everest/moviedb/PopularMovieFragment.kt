@@ -54,7 +54,7 @@ class PopularMovieFragment : Fragment(R.layout.popular_movie_layout) {
 
         movieAdapter?.setCardClickListener(object : MovieListAdapter.CardClickListener {
             override fun onCardClick(position: Int) {
-                getMovieDetails(viewModel.movieList.value!![position])
+                viewModel.movieList.value?.let { getMovieDetails(it.get(position)) }
             }
         })
 

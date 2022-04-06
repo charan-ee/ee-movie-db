@@ -13,14 +13,18 @@ class MovieRepository constructor(
     private val movieDatabaseClient: MovieDatabase
 ) {
     fun getAllMovies(apiResponseCallback: ApiResponseCallback) {
-        var movieList: List<Movie>
+        lateinit var movieList: List<Movie>
         val response = movieApiClient.getAllMovies()
 
         response.enqueue(object : Callback<APIResponse> {
             override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>) {
                 if (response.body() != null) {
                     apiResponseCallback.onResponse(convertDTOIntoUIModel(response.body()!!.movies))
-                    movieList = response.body()?.movies!!
+                    response.body()?.movies.also {
+                        if (it != null) {
+                            movieList = it
+                        }
+                    }
                     movieDatabaseClient.movieDao().insertAllMovies(movieList)
                 } else {
                     apiResponseCallback.onFailure("Error in ApiResponseCallback")
@@ -35,7 +39,7 @@ class MovieRepository constructor(
     }
 
     fun getCurrentPlayingMovies(apiResponseCallback: ApiResponseCallback) {
-        var movieList: List<Movie>
+        lateinit var movieList: List<Movie>
         val response = movieApiClient.getCurrentPlayingMovies()
         val currentDate = CurrentDate().getCurrentDate()
 
@@ -47,7 +51,11 @@ class MovieRepository constructor(
                             convertDTOIntoUIModel(it)
                         )
                     }
-                    movieList = response.body()?.movies!!
+                    response.body()?.movies.also {
+                        if (it != null) {
+                            movieList = it
+                        }
+                    }
                     movieDatabaseClient.movieDao().insertAllMovies(movieList)
                 } else {
                     apiResponseCallback.onFailure("Error in the callback")
