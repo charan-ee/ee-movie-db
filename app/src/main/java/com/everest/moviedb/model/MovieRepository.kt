@@ -2,17 +2,19 @@ package com.everest.moviedb.model
 
 import com.everest.moviedb.callbacks.ApiResponseCallback
 import com.everest.moviedb.ui.MovieDetail
+import com.everest.moviedb.utils.CurrentDate
 import com.everest.moviedb.utils.IMAGE_BASE_URL
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MovieRepository constructor(
     private val movieApiClient: MovieService,
     private val movieDatabaseClient: MovieDatabase
 ) {
-
-    fun getAllMovies(apiResponseCallback: ApiResponseCallback){
+    fun getAllMovies(apiResponseCallback: ApiResponseCallback) {
         var movieList: List<Movie>
         val response = movieApiClient.getAllMovies()
 
@@ -37,20 +39,25 @@ class MovieRepository constructor(
     fun getCurrentPlayingMovies(apiResponseCallback: ApiResponseCallback) {
         var movieList: List<Movie>
         val response = movieApiClient.getCurrentPlayingMovies()
+        val currentDate = CurrentDate().getCurrentDate()
 
         response.enqueue(object : Callback<APIResponse> {
             override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>) {
                 if (response.body() != null) {
-                    response.body()?.movies?.let { apiResponseCallback.onSuccess(convertDTOIntoUIModel(it)) }
+                    response.body()?.movies?.let {
+                        apiResponseCallback.onSuccess(
+                            convertDTOIntoUIModel(it)
+                        )
+                    }
                     movieList = response.body()?.movies!!
                     movieDatabaseClient.movieDao().insertAllMovies(movieList)
-                }else {
+                } else {
                     apiResponseCallback.onFailure("Error in the callback")
                 }
             }
 
             override fun onFailure(call: Call<APIResponse>, t: Throwable) {
-                movieList = movieDatabaseClient.movieDao().getCurrentMovies()
+                movieList = movieDatabaseClient.movieDao().getCurrentMovies(currentDate)
                 apiResponseCallback.onSuccess(convertDTOIntoUIModel(movieList))
             }
         })
@@ -62,11 +69,16 @@ class MovieRepository constructor(
         response.enqueue(object : Callback<APIResponse> {
             override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>) {
                 if (response.body() != null) {
-                    response.body()?.movies?.let { apiResponseCallback.onSuccess(convertDTOIntoUIModel(it)) }
-                }else {
+                    response.body()?.movies?.let {
+                        apiResponseCallback.onSuccess(
+                            convertDTOIntoUIModel(it)
+                        )
+                    }
+                } else {
                     apiResponseCallback.onFailure("Error in the callback")
                 }
             }
+
             override fun onFailure(call: Call<APIResponse>, t: Throwable) {
             }
         })
@@ -75,7 +87,12 @@ class MovieRepository constructor(
     private fun convertDTOIntoUIModel(movies: List<Movie>): List<MovieDetail> {
         return movies.map {
             MovieDetail(
-                it.name, IMAGE_BASE_URL + it.imageUrl, it.language, it.desc, it.release_date, it.rating
+                it.name,
+                IMAGE_BASE_URL + it.imageUrl,
+                it.language,
+                it.desc,
+                it.release_date,
+                it.rating
             )
         }
     }
